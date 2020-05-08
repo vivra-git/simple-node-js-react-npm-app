@@ -1,11 +1,18 @@
 pipeline {
     agent{label 'master'}
     stages {
+        stage('Setup') {
+            steps {
+                nodejs(nodeJSInstallationName: 'Node 6.x', configId: '<config-file-provider-id>') {
+                    sh 'npm config ls'
+                }
+            }
+            
         stage('Build') {
             steps {
-                sh 'npm install'
+                    sh 'npm install'
+                }
             }
-        }
         stage('Test') {
             steps {
                 sh './jenkins/scripts/test.sh'
