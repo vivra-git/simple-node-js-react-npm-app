@@ -1,14 +1,14 @@
 pipeline {
-    agent{label 'master'}
-    stages {
-        stage('Setup') {
-            steps {
-                nodejs(nodeJSInstallationName: 'Node 6.x', configId: '<config-file-provider-id>') {
-                    sh 'npm config ls'
-                }
-            }
+    agent{
+        docker {
+            image 'node:6-alpine'
+            args '-p 3000:3000'
         }
-            
+    }
+    environment {
+        CI = 'true' 
+    }
+    stages {
         stage('Build') {
             steps {
                     sh 'npm install'
